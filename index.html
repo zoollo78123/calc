@@ -67,7 +67,6 @@
 </div>
 
 <script>
-    // Firebase 설정
     const firebaseConfig = {
         apiKey: "AIzaSyBsXbrHi8hMWvzC6wj99bZtdqzXHETXOUU",
         authDomain: "backyeon.firebaseapp.com",
@@ -114,6 +113,7 @@
         const buyer = document.getElementById('log_buyer').value;
         const link = document.getElementById('log_link').value;
         const amount = document.getElementById('total_r').innerText;
+        const bank_deposit = document.getElementById('total_b').innerText; // 추가된 부분
 
         if(!seller || !buyer || !link || amount === "0원") {
             alert("모든 정보를 입력하고 금액을 확인해주세요!"); return;
@@ -124,6 +124,7 @@
             seller: seller,
             buyer: buyer,
             amount: amount,
+            bank_deposit: bank_deposit, // 파이어베이스에 공계 입금액 추가 저장
             link: link
         }).then(() => {
             alert("장부 기록 성공! ❄️");
@@ -146,7 +147,8 @@
             div.innerHTML = `
                 <div style="color:#00d4ff; font-size:11px;">[${item.date}]</div>
                 <div><b>${item.seller}</b> ➔ <b>${item.buyer}</b></div>
-                <div style="color:#ff7675; font-weight:bold;">금액: ${item.amount}</div>
+                <div style="color:#ff7675; font-weight:bold;">총 금액: ${item.amount}</div>
+                <div style="color:#0984e3; font-weight:bold;">공계 입금: ${item.bank_deposit || '기록 없음'}</div>
                 <a href="${item.link}" target="_blank" style="color:#888; font-size:11px;">[로그 링크 확인]</a>
             `;
             logBox.appendChild(div);
